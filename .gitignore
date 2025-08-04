@@ -1,0 +1,47 @@
+# Node.js
+# This will ignore the 'node_modules' directory in the root and any nested 'node_modules'
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# OS-generated files
+.DS_Store
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.cache/
+.eslintcache
+
+# Dependency lock file for yarn
+yarn.lock
+
+# Build artifacts
+# React client build output
+/workout-app/build
+
+# IDE-specific ignores
+.vscode/
+.idea/
+.project
+.settings
+.classpath
+
+# Compiled output
+/dist
+
+# Miscellaneous
+# For other editors you might be using
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
