@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
+import WorkoutTable from "./WorkoutTable";
+import { WorkoutBrief } from "../entities/WorkoutBriefEntity";
+import loginIcon from "../static/icons/login-icon.png";
 
 type ValuePiece = Date | null;
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-const fetchWorkoutsByDate = async (date: Date): Promise<string[]> => {
+const fetchWorkoutsByDate = async (date: Date): Promise<WorkoutBrief[]> => {
+    console.log(`fetchWorkoutsByDate called`);
     const dateStr = date.toISOString().split("T")[0]; // Format: YYYY-MM-DD
-    // Replace this with your actual API call
+
     const response = await fetch(`/api/workouts?date=${dateStr}`);
     if (!response.ok) {
         throw new Error("Failed to fetch workouts");
@@ -19,12 +23,30 @@ const fetchWorkoutsByDate = async (date: Date): Promise<string[]> => {
 
 export const MainPage: React.FC = () => {
     const [value, onChange] = useState<Value>(new Date());
-    const [workouts, setWorkouts] = useState<string[]>([
-        "Deadlift",
-        "bench press",
-        "Test2",
-        "Test3",
-        "Test4",
+    const [workouts, setWorkouts] = useState<WorkoutBrief[]>([
+        {
+            icon: loginIcon,
+            displayNumber: 1,
+            name: "Bench-press",
+            type: "Strength",
+            sets: [
+                {
+                    reps: 5,
+                    weight: 100,
+                    unit: "kg",
+                },
+                {
+                    reps: 7,
+                    weight: 80,
+                    unit: "kg",
+                },
+                {
+                    reps: 10,
+                    weight: 50,
+                    unit: "kg",
+                },
+            ],
+        },
     ]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
@@ -38,6 +60,7 @@ export const MainPage: React.FC = () => {
             setError("");
             try {
                 const result = await fetchWorkoutsByDate(selectedDate);
+                console.log(`fetched result = ${result.toString()}`);
                 setWorkouts(result);
             } catch (err) {
                 setError((err as Error).message);
@@ -45,6 +68,7 @@ export const MainPage: React.FC = () => {
                 setLoading(false);
             }
         };
+        loadWorkouts();
     }, [selectedDate]);
 
     const handleCalendarChange = (val: Value) => {
@@ -70,13 +94,7 @@ export const MainPage: React.FC = () => {
                 <p className="text-center my-4">No workouts found.</p>
             )}
 
-            <ul className="list-group my-3">
-                {workouts.map((workout, idx) => (
-                    <li className="list-group-item" key={idx}>
-                        {workout}
-                    </li>
-                ))}
-            </ul>
+            {workouts.length > 0 && <WorkoutTable workouts={workouts} />}
             <button type="button" className="btn btn-primary">
                 Add workout
             </button>

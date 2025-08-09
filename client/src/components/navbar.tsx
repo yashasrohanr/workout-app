@@ -1,14 +1,32 @@
+import Lottie from "lottie-react";
+import LottieAnimation from "../static/main_animation.json";
+import loginImage from "../static/icons/login-icon.png";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
+
 interface NavbarProps {
     isLoggedIn: boolean;
 }
 
 const Navbar: React.FC<NavbarProps> = ({ isLoggedIn }) => {
     return (
-        <nav className="navbar navbar-expand-lg bg-body-tertiary">
+        <nav className="navbar navbar-expand-lg navbar-light bg-white">
             <div className="container-fluid">
-                <a className="navbar-brand" href="#">
-                    Workout App
+                <a className="navbar-brand d-flex align-items-center" href="#">
+                    {isLoggedIn ? (
+                        <Lottie
+                            animationData={LottieAnimation}
+                            loop={true}
+                            style={{ height: "40px" }}
+                        ></Lottie>
+                    ) : (
+                        <img
+                            src={loginImage}
+                            style={{ maxHeight: "40px" }}
+                        ></img>
+                    )}
                 </a>
+                <span className="ms-2 fw-bold">Workout App</span>
                 <button
                     className="navbar-toggler"
                     type="button"

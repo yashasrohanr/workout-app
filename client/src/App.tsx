@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import Loginpage from "./components/login-page";
-import { MainPage } from "./components/main-page";
-import Navbar from "./components/navbar";
+import Loginpage from "./components/LoginPage";
+import { MainPage } from "./components/MainPage";
+import Navbar from "./components/Navbar";
+
 function App() {
-    const [loggedIn, setLoggedIn] = useState<boolean>(true);
+    const [loggedIn, setLoggedIn] = useState<boolean>(false);
 
     useEffect(() => {
         const isRemembered = localStorage.getItem("rememberMe") === "true";
         if (isRemembered) {
-            setLoggedIn(true);
+            setLoggedIn(false);
         }
     }, []);
 
@@ -20,7 +21,7 @@ function App() {
     };
 
     return (
-        <div className="container mt-5 vh-100">
+        <div className="container vh-100">
             <Navbar isLoggedIn={loggedIn} />
             {loggedIn ? (
                 <MainPage />

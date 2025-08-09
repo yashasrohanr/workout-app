@@ -1,5 +1,7 @@
 import React, { FormEvent, useState } from "react";
 import loginIcon from "../static/icons/login-icon.png";
+import Lottie from "lottie-react";
+import LottieAnimation from "../static/main_animation.json";
 
 interface LoginResponse {
     token: string;
@@ -60,20 +62,34 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
     };
 
     return (
-        <div className="container d-flex align-items-center justify-content-center vh-100 bg-light">
+        <div className="container d-flex align-items-center justify-content-center vh-100 bg-white">
             <form
                 className="w-100"
                 style={{ maxWidth: "330px" }}
                 onSubmit={handleFormSubmit}
             >
                 <div className="text-center mb-4">
-                    <img
-                        className="mb-2"
-                        src={loginIcon}
-                        alt="logo"
-                        width="100"
-                        height="100"
-                    />
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            maxWidth: "150px",
+                            margin: "0 auto",
+                            height: "150px",
+                            overflow: "hidden",
+                        }}
+                    >
+                        <Lottie
+                            animationData={LottieAnimation}
+                            loop
+                            style={{
+                                width: "20vw",
+                                height: "auto",
+                                maxWidth: "200px",
+                            }}
+                        />
+                    </div>
                     <h1 className="h3 mb-3 fw-normal">Sign in</h1>
                 </div>
 
